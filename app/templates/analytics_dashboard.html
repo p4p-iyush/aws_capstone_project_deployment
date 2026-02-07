@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Analytics Dashboard{% endblock %}
+{% block content %}
+<div class="row mb-3">
+    <div class="col"><h2><i class="bi bi-bar-chart-line"></i> Analytics Dashboard</h2></div>
+</div>
+{% if analytics %}
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h6>Total Deposits</h6>
+                <h3>{{ analytics.total_deposits|currency }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h6>Total Withdrawals</h6>
+                <h3>{{ analytics.total_withdrawals|currency }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h6>Net Change</h6>
+                <h3>{{ analytics.net_change|currency }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h6>Avg Transaction</h6>
+                <h3>{{ analytics.average_transaction|currency }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header"><h5>Transaction Summary (30 Days)</h5></div>
+            <div class="card-body">
+                <p><strong>Transaction Count:</strong> {{ analytics.transaction_count }}</p>
+                <p><strong>Largest Transaction:</strong> {{ analytics.largest_transaction|currency }}</p>
+                <p><strong>High-Value Transactions:</strong> {{ analytics.high_value_count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header"><h5>Spending Pattern</h5></div>
+            <div class="card-body">
+                <p><strong>Weekday Spending:</strong> {{ analytics.spending_pattern.weekday_spending|currency }}</p>
+                <p><strong>Weekend Spending:</strong> {{ analytics.spending_pattern.weekend_spending|currency }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info">No analytics data available. Please select an account or make some transactions.</div>
+{% endif %}
+{% endblock %}

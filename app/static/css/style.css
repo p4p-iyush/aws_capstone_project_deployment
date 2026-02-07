@@ -1,0 +1,66 @@
+/* Banking System Custom Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.btn {
+    border-radius: 5px;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.badge {
+    padding: 0.5em 0.75em;
+    font-size: 0.85em;
+}
+
+footer {
+    margin-top: auto;
+}
+
+.transaction-item {
+    padding: 15px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.account-card {
+    transition: transform 0.2s;
+}
+
+.account-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card {
+    padding: 20px;
+    text-align: center;
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+}

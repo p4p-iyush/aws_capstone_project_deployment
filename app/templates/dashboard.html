@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Banking System{% endblock %}
+{% block content %}
+<div class="row mb-4">
+    <div class="col"><h2><i class="bi bi-speedometer2"></i> Dashboard</h2></div>
+</div>
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h6>Total Balance</h6>
+                <h2>{{ data.total_balance|currency }}</h2>
+                <small>Across {{ data.account_count }} account(s)</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h6>Last 7 Days Spending</h6>
+                <h2>{{ data.spending_summary.last_7_days|currency }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h6>Last 30 Days Spending</h6>
+                <h2>{{ data.spending_summary.last_30_days|currency }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header"><h5>Your Accounts</h5></div>
+            <div class="list-group list-group-flush">
+                {% for account in data.accounts %}
+                <a href="{{ url_for('account.account_detail', account_id=account.account_id) }}" class="list-group-item list-group-item-action">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="mb-1">{{ account.account_type|title }} - ****{{ account.account_number[-4:] }}</h6>
+                            <small class="text-muted">{{ account.transaction_count }} transactions</small>
+                        </div>
+                        <div class="text-end">
+                            <h6 class="mb-0">{{ account.balance|currency }}</h6>
+                            <span class="badge bg-{{ 'success' if account.status == 'active' else 'secondary' }}">{{ account.status|upper }}</span>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+                {% if not data.accounts %}
+                <div class="list-group-item text-center text-muted py-4">No accounts found</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header"><h5>Recent Activity</h5></div>
+            <div class="list-group list-group-flush">
+                {% for txn in data.recent_activity[:10] %}
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="badge bg-{{ txn.transaction_type|transaction_type_badge }}">{{ txn.transaction_type|replace('_', ' ')|title }}</span>
+                            <small class="text-muted ms-2">{{ txn.timestamp|datetime('%b %d, %Y %I:%M %p') }}</small>
+                            {% if txn.description %}<p class="mb-0 mt-1"><small>{{ txn.description }}</small></p>{% endif %}
+                        </div>
+                        <h6 class="mb-0">{{ txn.amount|currency }}</h6>
+                    </div>
+                </div>
+                {% endfor %}
+                {% if not data.recent_activity %}
+                <div class="list-group-item text-center text-muted py-4">No recent activity</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col text-center">
+        <a href="{{ url_for('transactions.deposit') }}" class="btn btn-success me-2"><i class="bi bi-plus-circle"></i> Deposit</a>
+        <a href="{{ url_for('transactions.withdraw') }}" class="btn btn-warning me-2"><i class="bi bi-dash-circle"></i> Withdraw</a>
+        <a href="{{ url_for('transactions.transfer') }}" class="btn btn-primary"><i class="bi bi-arrow-left-right"></i> Transfer</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Deposit - Banking System{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-success text-white"><h4><i class="bi bi-plus-circle"></i> Make a Deposit</h4></div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Select Account</label>
+                        <select class="form-select" name="account_id" required>
+                            <option value="">Choose account...</option>
+                            {% for account in accounts %}
+                            <option value="{{ account.account_id }}">{{ account.account_type|title }} - ****{{ account.account_number[-4:] }} ({{ account.balance|currency }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Amount</label>
+                        <input type="number" class="form-control" name="amount" step="0.01" min="0.01" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description (Optional)</label>
+                        <input type="text" class="form-control" name="description" placeholder="e.g., Salary deposit">
+                    </div>
+                    <button type="submit" class="btn btn-success w-100"><i class="bi bi-check"></i> Deposit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
