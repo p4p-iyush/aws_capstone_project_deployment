@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Analytics{% endblock %}
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-bar-chart-line"></i> Analytics Dashboard</h2>
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h6>Total Deposits</h6>
+                <h3>{{ summary.total_deposits|currency }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h6>Total Withdrawals</h6>
+                <h3>{{ summary.total_withdrawals|currency }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h6>Net Change</h6>
+                <h3>{{ summary.net_change|currency }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h6>Current Balance</h6>
+                <h3>{{ summary.current_balance|currency }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header"><h5>Transaction Summary (30 Days)</h5></div>
+            <div class="card-body">
+                <p><strong>Total Transactions:</strong> {{ summary.transaction_count }}</p>
+                <p><strong>Largest Transaction:</strong> {{ summary.largest_transaction|currency }}</p>
+                <p><strong>Average Transaction:</strong> {{ summary.average_transaction|currency }}</p>
+                <p><strong>Transfers In:</strong> {{ summary.total_transfers_in|currency }}</p>
+                <p><strong>Transfers Out:</strong> {{ summary.total_transfers_out|currency }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header"><h5>Account Details</h5></div>
+            <div class="card-body">
+                <p><strong>Account:</strong> {{ selected_account.account_type|title }}</p>
+                <p><strong>Account Number:</strong> ****{{ summary.account_number[-4:] }}</p>
+                <p><strong>Status:</strong> <span class="badge bg-success">ACTIVE</span></p>
+                <p><strong>Created:</strong> {{ selected_account.created_at|datetime_format('%Y-%m-%d') }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
